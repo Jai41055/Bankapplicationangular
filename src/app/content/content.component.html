@@ -1,0 +1,275 @@
+<div>
+  <section class="content-section">
+    <div>
+      <img
+        class="bg-image"
+        src="../../assets/background.jpg"
+        alt="Background Image"
+      />
+    </div>
+    <div class="quote">
+      <p class="quote-text">-Banking is Necessary</p>
+    </div>
+    <div class="feature-button">
+      <a href="#resultSection" class="btn1">Use Our Features</a>
+    </div>
+  </section>
+  <section class="result-section" id="resultSection">
+    <h3 class="request">Give a Request for the Details</h3>
+    <div class="main-feature">
+      <div class="inputs">
+        <div class="input-section">
+          <label class="data-lable">Service</label>
+          <div>
+            <select
+              name="service"
+              id="serviceId"
+              class="select"
+              (change)="serviceChange()"
+              [(ngModel)]="serviceId"
+            >
+              <option value="0" selected>Select</option>
+              <option value="1">Create Checking Account</option>
+              <option value="2">Create Savings Account</option>
+              <option value="3">Make a Deposit</option>
+              <option value="4">Make a Widhdrawal</option>
+              <option value="5">Calculate Interest for Savings Account</option>
+              <option value="6">Check Account Balance</option>
+            </select>
+          </div>
+        </div>
+        <form
+          class="form"
+          [formGroup]="formInput"
+          (ngSubmit)="submitForm()"
+          *ngIf="formShowFlag"
+        >
+          <div class="input-form" *ngIf="firstNameflag">
+            <label class="input-lable">First Name</label>
+            <div>
+              <input
+                type="text"
+                name="firstName"
+                id="firstName"
+                class="input"
+                formControlName="firstName"
+                placeholder="First Name"
+                maxlength="10"
+              /><br />
+              <span
+                *ngIf="first && first.invalid && first.touched"
+                class="error"
+                >Please Enter valid First name</span
+              >
+            </div>
+          </div>
+          <div class="input-form" *ngIf="lastNameflag">
+            <label class="input-lable">Last Name</label>
+            <div>
+              <input
+                type="text"
+                name="lastName"
+                id="lastName"
+                class="input"
+                formControlName="lastName"
+                placeholder="Last Name"
+                maxlength="10"
+              /><br />
+              <span *ngIf="last && last.invalid && last.touched" class="error"
+                >Please Enter valid Last name</span
+              >
+            </div>
+          </div>
+          <div class="input-form" *ngIf="emailflag">
+            <label class="input-lable">Email Address</label>
+            <div>
+              <input
+                type="text"
+                name="email"
+                id="email"
+                class="input"
+                formControlName="email"
+                placeholder="Email"
+                maxlength="20"
+              /><br />
+              <span
+                *ngIf="emailAdd && emailAdd.invalid && emailAdd.touched"
+                class="error"
+                >Please Enter valid Email address</span
+              >
+            </div>
+          </div>
+          <div class="input-form" *ngIf="phoneflag">
+            <label class="input-lable">Phone</label>
+            <div>
+              <input
+                type="text"
+                name="phone"
+                id="phone"
+                class="input"
+                formControlName="phone"
+                placeholder="Phone"
+                maxlength="10"
+              /><br />
+              <span
+                *ngIf="mobile && mobile.invalid && mobile.touched"
+                class="error"
+                >Please Enter valid Phone number</span
+              >
+            </div>
+          </div>
+          <div class="input-form" *ngIf="accountFlag">
+            <label class="input-lable">Account Number</label>
+            <div>
+              <input
+                type="text"
+                name="accountNo"
+                id="accountNo"
+                class="input"
+                formControlName="accountNumber"
+                placeholder="Account Number"
+                maxlength="10"
+              /><br />
+              <span
+                *ngIf="accountNo && accountNo.invalid && accountNo.touched"
+                class="error"
+                >Please Enter valid Account number</span
+              >
+            </div>
+          </div>
+          <div class="input-form" *ngIf="initialflag">
+            <label class="input-lable">Initial Amount</label>
+            <div>
+              <input
+                type="text"
+                name="intialAmount"
+                id="intialAmount"
+                class="input"
+                formControlName="amountInitial"
+                placeholder="Amount"
+              /><br />
+              <span
+                *ngIf="intial && intial.invalid && intial.touched"
+                class="error"
+                >Please Enter valid amount</span
+              >
+            </div>
+          </div>
+          <div class="input-form" *ngIf="depositFlag">
+            <label class="input-lable">Deposit Amount</label>
+            <div>
+              <input
+                type="text"
+                name="depositAmount"
+                id="depositAmount"
+                class="input"
+                formControlName="deposit"
+                placeholder="Amount"
+              /><br />
+              <span
+                *ngIf="
+                  depositMoney && depositMoney.invalid && depositMoney.touched
+                "
+                class="error"
+                >Please Enter valid amount</span
+              >
+            </div>
+          </div>
+          <div class="input-form" *ngIf="withdrawflag">
+            <label class="input-lable">Withdraw Amount</label>
+            <div>
+              <input
+                type="text"
+                name="withdrawAmount"
+                id="withdrawAmount"
+                class="input"
+                formControlName="withdraw"
+                placeholder="Amount"
+              /><br />
+              <span
+                *ngIf="
+                  withdrawMoney &&
+                  withdrawMoney.invalid &&
+                  withdrawMoney.touched
+                "
+                class="error"
+                >Please Enter valid amount</span
+              >
+            </div>
+          </div>
+          <div class="submit-btn">
+            <button
+              class="submit"
+              [ngClass]="{ hide: formInput.status === 'INVALID' }"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+        <div class="table-section" *ngIf="transferList && !formShowFlag">
+          <table>
+            <thead>
+              <tr class="header-row">
+                <th>S.No</th>
+                <th>Transaction</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let item of transferList; let i = index"
+                class="data-row"
+              >
+                <td>{{ i + 1 }}.</td>
+                <td>{{ setTrans(item) }}</td>
+                <td [ngStyle]="{ color: getAmountColor(item) }">
+                  {{ item }} <span *ngIf="getArrowFlag(item)">&#8599;</span
+                  ><span *ngIf="!getArrowFlag(item)">&#8601;</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="response">
+        <div>
+          <h4 class="detail-header">Here is your details</h4>
+          <div class="details">
+            <div class="box-data">
+              <div class="row" *ngIf="status">
+                <label class="lable-style">Status:</label>
+                <span class="account-data" [ngStyle]="{ color: getColor() }">{{
+                  status
+                }}</span>
+              </div>
+              <div class="row" *ngIf="message">
+                <label class="lable-style">Message:</label>
+                <span class="account-data">{{ message }}</span>
+              </div>
+              <div class="row" *ngIf="userName">
+                <label class="lable-style">User Name:</label>
+                <span class="account-data">{{ userName }}</span>
+              </div>
+              <div class="row" *ngIf="accountNumber">
+                <label class="lable-style">Account Number:</label>
+                <span class="account-data">{{ accountNumber }}</span>
+              </div>
+              <div class="row" *ngIf="accountType">
+                <label class="lable-style">Account Type:</label>
+                <span class="account-data">{{ accountType }} Account</span>
+              </div>
+              <div class="row" *ngIf="accountBalance">
+                <label class="lable-style">Account Balance:</label>
+                <span class="account-data">{{ accountBalance }}</span>
+              </div>
+              <div class="row" *ngIf="interest > 0">
+                <label class="lable-style">Interest:</label>
+                <span class="account-data">{{ interest }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
